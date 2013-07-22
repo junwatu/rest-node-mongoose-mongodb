@@ -1,4 +1,4 @@
-Koneksi Node.js Dengan MongoDB Menggunakan Mongoose
+Node.js - Mongoose - MongoDB
 ===================================================
 
 Code sample
@@ -6,6 +6,8 @@ Code sample
 
 Install
 -------
+
+Make sure MongoDB database server is running then
 
 ```
 $ cd koneksi-node-mongodb
