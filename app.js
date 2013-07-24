@@ -101,6 +101,22 @@ app.post("/persons", function(req, res){
     })
 });
 
+// GET /persons/:username
+app.get('/persons/:username', function(req, res){
+    var param_username = req.params.username;
+
+    Persons.find({username:param_username}, function(err, person){
+        if(err) {
+            res.json({
+                data:"Error finding person."
+            });
+        }else {
+            res.json({
+                person: person
+            });
+        }
+    })
+});
 
 app.listen(app.get('PORT'));
 console.log("Server Port: " + app.get('PORT'));
