@@ -118,5 +118,32 @@ app.get('/persons/:username', function(req, res){
     })
 });
 
+// PUT /persons/:username
+app.put('/persons/:username', function(req, res){
+    var query = {username: req.params.username},
+        data_update = {
+            name : req.body.name,
+            username: req.params.username,
+            website: req.body.website,
+            updatedAt: new Date()
+        }
+
+    Persons.update(query, data_update, {multi:false}, function(err, numberAffected, rawResponse ){
+        if(err) {
+            res.json({
+                error:err
+            })
+        }else {
+            res.json({
+                numberAffected:numberAffected,
+                rawResponse: rawResponse
+            });
+        }
+    });
+
+});
+
+//
+
 app.listen(app.get('PORT'));
 console.log("Server Port: " + app.get('PORT'));
