@@ -61,10 +61,20 @@ var PersonsSchema = new mongoose.Schema({
 
 // Routes
 app.get("/", function (req, res) {
-    res.setHeader('content-type', 'text/application-json');
     res.json({
         info: 'Persons REST API'
     });
+});
+
+// GET /persons
+app.get("/persons", function (req, res) {
+    // Find All
+    Persons.find(function (err, persons) {
+        if (err) res.json({error: err})
+
+        if(persons)
+            res.json({persons: persons});
+    })
 });
 
 app.listen(app.get('PORT'));
