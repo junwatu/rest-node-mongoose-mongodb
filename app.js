@@ -77,5 +77,30 @@ app.get("/persons", function (req, res) {
     })
 });
 
+// POST /persons
+app.post("/persons", function(req, res){
+    /**
+     * Get data from post
+     * @type {Persons}
+     */
+    var person = new Persons({
+        name: req.body.name,
+        username: req.body.username,
+        website: req.body.website,
+        createdAt: new Date(),
+        updatedAt: new Date()
+    });
+
+    person.save(function (err, person) {
+        if (err) {
+            res.send({error:err});
+        }else {
+            console.log('Save data: ' + person);
+            res.json({message: 'ok'});
+        }
+    })
+});
+
+
 app.listen(app.get('PORT'));
 console.log("Server Port: " + app.get('PORT'));
