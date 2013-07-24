@@ -96,7 +96,7 @@ app.post("/persons", function(req, res){
             res.send({error:err});
         }else {
             console.log('Save data: ' + person);
-            res.json({message: 'ok'});
+            res.json({message: ' save ok'});
         }
     })
 });
@@ -143,7 +143,21 @@ app.put('/persons/:username', function(req, res){
 
 });
 
-//
+// DELETE /persons/:username
+
+app.delete('/persons/:username', function(req, res){
+    var param_username_del = req.params.username;
+
+    Persons.remove({username:param_username_del}, function(err){
+        if(err){ res.json({
+            error:err
+        })
+        }else {
+            res.json({message: "delete ok"});
+        }
+    });
+});
+
 
 app.listen(app.get('PORT'));
 console.log("Server Port: " + app.get('PORT'));
