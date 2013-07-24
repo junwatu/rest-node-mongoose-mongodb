@@ -24,7 +24,8 @@ app.configure(function () {
 
     app.set('views', __dirname + '/views');
     app.set('view engine', 'html');
-    app.set('PORT', process.env.PORT || 3000);
+
+    app.set('PORT', process.env.PORT || 3300);
     app.set('MONGODB_URI', 'mongodb://localhost/persons');
 
 });
@@ -35,16 +36,16 @@ app.configure(function () {
 var db = mongoose.createConnection(app.get('MONGODB_URI'));
 
 db.on('connected', function () {
-    console.log('Aplikasi terhubung dengan database.');
+    console.log('Connected to MongoDB.');
 
 });
 
 db.on('error', function (err) {
-    console.error.bind(console, 'Connection error!');
+    console.error.bind(console, 'Connection to MongoDB error!.');
 });
 
 db.on('close', function () {
-    console.log('Koneksi ke database ditutup.');
+    console.log('Connection to MongoDB closed.');
 });
 
 // Schema
@@ -52,62 +53,18 @@ var PersonsSchema = new mongoose.Schema({
         name: 'string',
         username: 'string',
         website: 'string',
-        createdAt: 'date'
+        createdAt: 'date',
+        updatedAt: 'date'
     }),
 
     Persons = db.model('Persons', PersonsSchema);
 
 // Routes
 app.get("/", function (req, res) {
-    res.render('index',{
-        title:"Koneksi Node & MongoDB",
-        github:"https://github.com/junwatu/koneksi-node-mongodb"
+    res.setHeader('content-type', 'text/application-json');
+    res.json({
+        info: 'Persons REST API'
     });
-});
-
-app.get("/persons", function (req, res) {
-
-    // Find All
-    Persons.find(function (err, persons) {
-        if (err) res.send(err)
-
-        res.set('Content-Type', 'application/json');
-        res.send(persons);
-    })
-});
-
-
-app.post("/persons", function(req, res){
-    /**
-     * Get data from post
-     * @type {Persons}
-     */
-    var person = new Persons({
-        name: 'Equan Pr.',
-        username: "equan_pr",
-        website: 'http://www.junwatu.com',
-        createdAt: new Date()
-    });
-
-    person.save(function (err, person) {
-        if (err) res.send(err)
-        console.log('Save Data: ' + person);
-    })
-
-
-    res.send(req.body.name + " "+ req.body.website);
-});
-
-app.get('/persons/:username', function(req, res){
-    res.send(req.params.username);
-});
-
-app.put('/persons/:username', function(req, res){
-
-});
-
-app.delete('/persons/:username', function(req, res){
-
 });
 
 app.listen(app.get('PORT'));
