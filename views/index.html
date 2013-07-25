@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/skeleton.css">
     <link rel="stylesheet" href="/css/layout.css">
-    <link rel="stylesheet" href="/css/themes/pastie.css"/>
+    <link rel="stylesheet" href="/css/style.css"/>
 
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
     <!--[if lt IE 9]>
@@ -44,31 +44,47 @@
 
 <div class="container">
     <div class="sixteen columns">
-        <h1 class="remove-bottom" style="margin-top: 40px">Koneksi Node & MongoDB</h1>
-        <h5><a href="https://github.com/junwatu/koneksi-node-mongodb">Github</a></h5>
-        <hr/>
+        <h1 style="margin-top: 40px">Persons REST API</h1>
     </div>
     <div class="sixteen columns">
-
+        <span class="pretview">{{ data }}</span>
+        <table style="margin-bottom:24px;">
+            <tbody><tr class="alt-table-row">
+                <th>Method</th>
+                <th>URL</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>/persons</td>
+                <td>Get all persons data</td>
+            </tr>
+            <tr class="alt-table-row">
+                <td>GET</td>
+                <td>/persons/user_name</td>
+                <td>Get person data based on it's username</td>
+            </tr>
+            <tr>
+                <td>POST</td>
+                <td>/persons</td>
+                <td>Create new person data</td>
+            </tr>
+            <tr class="alt-table-row">
+                <td>PUT</td>
+                <td>/persons/user_name</td>
+                <td>Update person data based on it's username</td>
+            </tr>
+            <tr>
+                <td>DELETE</td>
+                <td>/persons/user_name</td>
+                <td>Delete person</td>
+            </tr>
+            </tbody></table>
     </div>
     <div class="sixteen columns">
-        <form action="/persons" method="post">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name"/>
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username"/>
-            <label for="website">Website</label>
-            <input type="text" id="website" name="website"/>
-            <input type="submit" value="save"/>
-        </form>
-    </div>
-    <div class="sixteen columns">
-        {{ data }}
+        <h5><a  class="button" href="https://github.com/junwatu/koneksi-node-mongodb"><i class="icon-github icon-large"></i> Github</a></h5>
     </div>
 </div>
 
-<script type="text/javascript" src="/js/rainbow.min.js"></script>
-<script type="text/javascript" src="/js/language/javascript.js"></script>
-<script type="text/javascript" src="/js/language/generic.js"></script>
 </body>
 </html>
