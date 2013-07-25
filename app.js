@@ -61,8 +61,9 @@ var PersonsSchema = new mongoose.Schema({
 
 // Routes
 app.get("/", function (req, res) {
-    res.json({
-        info: 'Persons REST API'
+    res.render('index',{
+        data: 'Silly RESTful sample app built with Node.js, Express, Mongoose and MongoDB. ' +
+            'Maybe it\'s useful for beginners ;)'
     });
 });
 
@@ -144,7 +145,6 @@ app.put('/persons/:username', function(req, res){
 });
 
 // DELETE /persons/:username
-
 app.delete('/persons/:username', function(req, res){
     var param_username_del = req.params.username;
 
