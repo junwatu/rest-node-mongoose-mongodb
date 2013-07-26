@@ -1,7 +1,11 @@
 Node.js - Mongoose - MongoDB
 ============================
 
-Silly REST servie using Node.js and MongoDB database through Mongoose lib.
+Silly REST app using Node.js, Express, Mongoose and MongoDB database.
+
+This is sample app from my blog post (indonesian) at
+
+http://www.junwatu.com/2013/07/27/restful-service-menggunakan-node-js-mongoose-mongodb/
 
 
 Install
@@ -53,3 +57,7 @@ Create new person data
 $ http --form POST localhost:3300/persons name="Anyone Yo" website=http://dude.com username=dude
 ```
 
+Demo
+----
+
+Online Persons REST API service at http://persons-api.herokuapp.com/
