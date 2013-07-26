@@ -16,6 +16,18 @@ var express = require("express"),
 app.configure(function () {
     app.use(express.logger());
 
+    app.use(function(req, res, next) {
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+        res.header('Access-Control-Allow-Headers', 'Content-Type')
+        if ('OPTIONS' == req.method) {
+            res.send(200);
+        }
+        else {
+            next();
+        }
+    })
+
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(express.static(__dirname+'/public'));
@@ -25,8 +37,9 @@ app.configure(function () {
     app.set('views', __dirname + '/views');
     app.set('view engine', 'html');
 
-    app.set('PORT', process.env.PORT || 3300);
-    app.set('MONGODB_URI', 'mongodb://localhost/persons');
+    app.set('PORT', process.env.PORT || 5000);
+    app.set('MONGODB_URI', process.env.MONGOLAB_URI ||
+        process.env.MONGOHQ_URL || 'mongodb://localhost/persons');
 
 });
 
