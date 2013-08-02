@@ -14,7 +14,7 @@ Install
 Make sure MongoDB database server is running then
 
 ```
-$ cd koneksi-node-mongodb
+$ cd rest-node-mongoose-mongodb
 $ npm install
 $ node app.js
 ```
