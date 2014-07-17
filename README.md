@@ -3,10 +3,6 @@ Node.js - Mongoose - MongoDB
 
 Silly REST app using Node.js, Express, Mongoose and MongoDB database.
 
-This is sample app from my blog post (indonesian) at
-
-http://www.junwatu.com/2013/07/27/restful-service-menggunakan-node-js-mongoose-mongodb/
-
 
 Install
 -------
