@@ -35,7 +35,7 @@ $ http localhost:3300/persons
 Update data record. Example for username `morbid_angel`
 
 ```
-$ http --json PUT localhost:3300/persons/morbid_angel name="Equan Pr." website=http://www.junwatu.com
+$ http --json PUT localhost:3300/persons/morbid_angel name="Equan Pr." website=http://equan.me
 ```
 
 ###DELETE
