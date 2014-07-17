@@ -2,7 +2,7 @@
  * Koneksi Nodejs dengan MongoDB menggunakan Mongoose
  *
  * Author By Equan Pr.
- * www.junwatu.com
+ * http://equan.me
  *
  * License :  Whatever you want! :D
  */
