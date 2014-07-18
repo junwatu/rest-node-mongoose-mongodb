@@ -7,14 +7,16 @@
  * License :  Whatever you want! :D
  */
 
-var express = require("express"),
-    app = express(),
-    mongoose = require('mongoose'),
-    path = require('path'),
-    engines = require('consolidate');
+var express = require("express");
+var app = express();
+var mongoose = require('mongoose');
+var path = require('path');
+var engines = require('consolidate');
+var bodyParser = require('body-parser');
+var logger = require('morgan');
+var methodOverride = require('method-override');
 
-app.configure(function () {
-    app.use(express.logger());
+    app.use(logger());
 
     app.use(function(req, res, next) {
         res.header('Access-Control-Allow-Origin', '*');
@@ -28,8 +30,8 @@ app.configure(function () {
         }
     })
 
-    app.use(express.bodyParser());
-    app.use(express.methodOverride());
+    app.use(bodyParser());
+    app.use(methodOverride());
     app.use(express.static(__dirname+'/public'));
 
     app.engine('html', engines.handlebars);
@@ -38,10 +40,9 @@ app.configure(function () {
     app.set('view engine', 'html');
 
     app.set('PORT', process.env.PORT || 5000);
-    app.set('MONGODB_URI', process.env.MONGOLAB_URI ||
-        process.env.MONGOHQ_URL || 'mongodb://localhost/persons');
+    app.set('MONGODB_URI', process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/persons');
 
-});
+var router = express.Router();
 
 /**
  * MongoDB connection
@@ -80,8 +81,8 @@ app.get("/", function (req, res) {
     });
 });
 
-// GET /persons
-app.get("/persons", function (req, res) {
+// GET /api/persons
+router.get("/persons", function (req, res) {
     // Find All
     Persons.find(function (err, persons) {
         if (err) res.json({error: err})
@@ -91,8 +92,8 @@ app.get("/persons", function (req, res) {
     })
 });
 
-// POST /persons
-app.post("/persons", function(req, res){
+// POST /api/persons
+router.post("/persons", function(req, res){
     /**
      * Get data from post
      * @type {Persons}
@@ -115,8 +116,8 @@ app.post("/persons", function(req, res){
     })
 });
 
-// GET /persons/:username
-app.get('/persons/:username', function(req, res){
+// GET /api/persons/:username
+router.get('/persons/:username', function(req, res){
     var param_username = req.params.username;
 
     Persons.find({username:param_username}, function(err, person){
@@ -132,8 +133,8 @@ app.get('/persons/:username', function(req, res){
     })
 });
 
-// PUT /persons/:username
-app.put('/persons/:username', function(req, res){
+// PUT /api/persons/:username
+router.put('/persons/:username', function(req, res){
     var query = {username: req.params.username},
         data_update = {
             name : req.body.name,
@@ -157,8 +158,8 @@ app.put('/persons/:username', function(req, res){
 
 });
 
-// DELETE /persons/:username
-app.delete('/persons/:username', function(req, res){
+// DELETE /api/persons/:username
+router.delete('/persons/:username', function(req, res){
     var param_username_del = req.params.username;
 
     Persons.remove({username:param_username_del}, function(err){
@@ -171,6 +172,7 @@ app.delete('/persons/:username', function(req, res){
     });
 });
 
+app.use('/api', router);
 
 app.listen(app.get('PORT'));
 console.log("Server Port: " + app.get('PORT'));
