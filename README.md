@@ -35,14 +35,14 @@ $ http localhost:3300/persons
 Update data record. Example for username `morbid_angel`
 
 ```
-$ http --json PUT localhost:3300/persons/morbid_angel name="Equan Pr." website=http://equan.me
+$ http --json PUT localhost:3300/api/persons/morbid_angel name="Equan Pr." website=http://equan.me
 ```
 
 ###DELETE
 To delete record based on username
 
 ```
-$ http DELETE localhost:3300/persons/morbid_angel
+$ http DELETE localhost:3300/api/persons/morbid_angel
 ```
 
 ###POST
@@ -50,7 +50,7 @@ $ http DELETE localhost:3300/persons/morbid_angel
 Create new person data
 
 ```
-$ http --form POST localhost:3300/persons name="Anyone Yo" website=http://dude.com username=dude
+$ http --form POST localhost:3300/api/persons name="Anyone Yo" website=http://dude.com username=dude
 ```
 
 Demo
