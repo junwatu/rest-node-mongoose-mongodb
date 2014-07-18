@@ -16,31 +16,31 @@ var bodyParser = require('body-parser');
 var logger = require('morgan');
 var methodOverride = require('method-override');
 
-    app.use(logger());
 
-    app.use(function(req, res, next) {
-        res.header('Access-Control-Allow-Origin', '*');
-        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-        res.header('Access-Control-Allow-Headers', 'Content-Type')
-        if ('OPTIONS' == req.method) {
-            res.send(200);
-        }
-        else {
-            next();
-        }
-    })
+app.use(logger());
 
-    app.use(bodyParser());
-    app.use(methodOverride());
-    app.use(express.static(__dirname+'/public'));
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type')
+    if ('OPTIONS' == req.method) {
+        res.send(200);
+    } else {
+        next();
+    }
+})
 
-    app.engine('html', engines.handlebars);
+app.use(bodyParser());
+app.use(methodOverride());
+app.use(express.static(__dirname + '/public'));
 
-    app.set('views', __dirname + '/views');
-    app.set('view engine', 'html');
+app.engine('html', engines.handlebars);
 
-    app.set('PORT', process.env.PORT || 5000);
-    app.set('MONGODB_URI', process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/persons');
+app.set('views', __dirname + '/views');
+app.set('view engine', 'html');
+
+app.set('PORT', process.env.PORT || 5000);
+app.set('MONGODB_URI', process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/persons');
 
 var router = express.Router();
 
@@ -49,16 +49,16 @@ var router = express.Router();
  */
 var db = mongoose.createConnection(app.get('MONGODB_URI'));
 
-db.on('connected', function () {
+db.on('connected', function() {
     console.log('Connected to MongoDB.');
 
 });
 
-db.on('error', function (err) {
+db.on('error', function(err) {
     console.error.bind(console, 'Connection to MongoDB error!.');
 });
 
-db.on('close', function () {
+db.on('close', function() {
     console.log('Connection to MongoDB closed.');
 });
 
@@ -74,26 +74,30 @@ var PersonsSchema = new mongoose.Schema({
     Persons = db.model('Persons', PersonsSchema);
 
 // Routes
-app.get("/", function (req, res) {
-    res.render('index',{
+app.get("/", function(req, res) {
+    res.render('index', {
         data: 'Silly RESTful sample app built with Node.js, Express, Mongoose and MongoDB. ' +
             'Maybe it\'s useful for beginners ;)'
     });
 });
 
 // GET /api/persons
-router.get("/persons", function (req, res) {
+router.get("/persons", function(req, res) {
     // Find All
-    Persons.find(function (err, persons) {
-        if (err) res.json({error: err})
+    Persons.find(function(err, persons) {
+        if (err) res.json({
+            error: err
+        })
 
-        if(persons)
-            res.json({persons: persons});
+        if (persons)
+            res.json({
+                persons: persons
+            });
     })
 });
 
 // POST /api/persons
-router.post("/persons", function(req, res){
+router.post("/persons", function(req, res) {
     /**
      * Get data from post
      * @type {Persons}
@@ -106,26 +110,32 @@ router.post("/persons", function(req, res){
         updatedAt: new Date()
     });
 
-    person.save(function (err, person) {
+    person.save(function(err, person) {
         if (err) {
-            res.send({error:err});
-        }else {
+            res.send({
+                error: err
+            });
+        } else {
             console.log('Save data: ' + person);
-            res.json({message: ' save ok'});
+            res.json({
+                message: ' save ok'
+            });
         }
     })
 });
 
 // GET /api/persons/:username
-router.get('/persons/:username', function(req, res){
+router.get('/persons/:username', function(req, res) {
     var param_username = req.params.username;
 
-    Persons.find({username:param_username}, function(err, person){
-        if(err) {
+    Persons.find({
+        username: param_username
+    }, function(err, person) {
+        if (err) {
             res.json({
-                data:"Error finding person."
+                data: "Error finding person."
             });
-        }else {
+        } else {
             res.json({
                 person: person
             });
@@ -134,23 +144,27 @@ router.get('/persons/:username', function(req, res){
 });
 
 // PUT /api/persons/:username
-router.put('/persons/:username', function(req, res){
-    var query = {username: req.params.username},
+router.put('/persons/:username', function(req, res) {
+    var query = {
+            username: req.params.username
+        },
         data_update = {
-            name : req.body.name,
+            name: req.body.name,
             username: req.params.username,
             website: req.body.website,
             updatedAt: new Date()
         }
 
-    Persons.update(query, data_update, {multi:false}, function(err, numberAffected, rawResponse ){
-        if(err) {
+    Persons.update(query, data_update, {
+        multi: false
+    }, function(err, numberAffected, rawResponse) {
+        if (err) {
             res.json({
-                error:err
+                error: err
             })
-        }else {
+        } else {
             res.json({
-                numberAffected:numberAffected,
+                numberAffected: numberAffected,
                 rawResponse: rawResponse
             });
         }
@@ -159,15 +173,20 @@ router.put('/persons/:username', function(req, res){
 });
 
 // DELETE /api/persons/:username
-router.delete('/persons/:username', function(req, res){
+router.delete('/persons/:username', function(req, res) {
     var param_username_del = req.params.username;
 
-    Persons.remove({username:param_username_del}, function(err){
-        if(err){ res.json({
-            error:err
-        })
-        }else {
-            res.json({message: "delete ok"});
+    Persons.remove({
+        username: param_username_del
+    }, function(err) {
+        if (err) {
+            res.json({
+                error: err
+            })
+        } else {
+            res.json({
+                message: "delete ok"
+            });
         }
     });
 });
